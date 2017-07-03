@@ -1,0 +1,9 @@
+[submodule "HitchedJukeBox.Voter"]
+	path = HitchedJukeBox.Voter
+	url = https://github.com/NigelAnderton/HitchedJukeBox.Voter.git
+[submodule "HitchedJukeBox.Server"]
+	path = HitchedJukeBox.Server
+	url = https://github.com/NigelAnderton/HitchedJukeBox.Server.git
+[submodule "HitchedJukeBox.Player"]
+	path = HitchedJukeBox.Player
+	url = https://github.com/NigelAnderton/HitchedJukeBox.Player.git
