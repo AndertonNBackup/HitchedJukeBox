@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  hitchedjukebox_player:
+    build: HitchedJukeBox.Player/.
+    ports:
+      - "8080:3000"
+    networks: 
+      - jukenet
+    depends_on:
+      - redis
+  hitchedjukebox_voter:
+    build: HitchedJukeBox.Voter/.
+    ports:
+      - "8000:3000"
+    networks: 
+      - jukenet
+    depends_on:
+      - redis
+  hitchedjukebox_server:
+    build: HitchedJukeBox.Server/.
+    ports:
+      - "8999:3000"
+    networks: 
+      - jukenet
+    depends_on:
+      - redis
+      - hitchedjukebox_player
+      - hitchedjukebox_voter
+  redis:
+    image: redis:alpine
+    networks: 
+      - jukenet
+# volumes:
+#     db_data:
+networks: 
+  jukenet:
