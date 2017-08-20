@@ -1,31 +1,47 @@
-version: '3'
+version: '3.2'
 
 services:
-  hitchedjukebox_player:
-    build: HitchedJukeBox.Player/.
-    ports:
-      - "8080:3000"
-    networks: 
-      - jukenet
-    depends_on:
-      - redis
+  # hitchedjukebox_player:
+  #   build: HitchedJukeBox.Player/.
+  #   ports:
+  #     - "8080:3000"
+  #   networks: 
+  #     - jukenet
+  #   depends_on:
+  #     - redis
   hitchedjukebox_voter:
     build: HitchedJukeBox.Voter/.
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - type: bind
+        source: ./HitchedJukeBox.Voter/.
+        target: /usr/code
+    command: bash -c "sh dev_entry_point.sh"    
     ports:
-      - "8000:3000"
+      - "4200:4200"
+      - "49153:49153"
+      - "8080:8080"
     networks: 
       - jukenet
     depends_on:
       - redis
   hitchedjukebox_server:
     build: HitchedJukeBox.Server/.
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - type: bind
+        source: ./HitchedJukeBox.Server/.
+        target: /usr/code
+    command: bash -c "cd server && npm run watch"
     ports:
-      - "8999:3000"
+      - "8085:8085"
     networks: 
       - jukenet
     depends_on:
       - redis
-      - hitchedjukebox_player
+      #- hitchedjukebox_player
       - hitchedjukebox_voter
   redis:
     image: redis:alpine
