@@ -47,6 +47,13 @@ services:
     image: redis:alpine
     networks: 
       - jukenet
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks: 
+      - jukenet
 # volumes:
 #     db_data:
 networks: 
