@@ -1,14 +1,22 @@
 version: '3.2'
 
 services:
-  # hitchedjukebox_player:
-  #   build: HitchedJukeBox.Player/.
-  #   ports:
-  #     - "8080:3000"
-  #   networks: 
-  #     - jukenet
-  #   depends_on:
-  #     - redis
+  hitchedjukebox_player:
+    build: HitchedJukeBox.Player/.
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - type: bind
+        source: ./HitchedJukeBox.Player/.
+        target: /usr/code
+    command: bash -c "sh dev_entry_point.sh"    
+    ports:
+      - "4300:4300"
+      - "8090:8090"
+    networks: 
+      - jukenet
+    depends_on:
+      - redis
   hitchedjukebox_voter:
     build: HitchedJukeBox.Voter/.
     environment:
