@@ -4,7 +4,10 @@ services:
   hitchedjukebox_player:
     build: HitchedJukeBox.Player/.
     environment:
+      - DEV=${DEV}
       - REDIS_HOST=redis
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
     volumes:
       - type: bind
         source: ./HitchedJukeBox.Player/.
@@ -20,7 +23,10 @@ services:
   hitchedjukebox_voter:
     build: HitchedJukeBox.Voter/.
     environment:
+      - DEV=${DEV}
       - REDIS_HOST=redis
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
     volumes:
       - type: bind
         source: ./HitchedJukeBox.Voter/.
